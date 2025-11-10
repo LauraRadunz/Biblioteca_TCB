@@ -1,4 +1,4 @@
-package br.edu.ifpr.model;
+package br.edu.ifpr.biblioteca.model;
 
 public class Contato {
     private int id;

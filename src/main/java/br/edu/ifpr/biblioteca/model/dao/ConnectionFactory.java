@@ -1,4 +1,4 @@
-package br.edu.ifpr.model.dao;
+package br.edu.ifpr.biblioteca.model.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,9 +13,9 @@ public class ConnectionFactory {
         try {
             if(conexao==null){
                 //jdbc:gdbd://ip do servidor do BD:porta/database
-                String url = "jdbc:mysql://localhost:3306/agenda";
-                String user= "root";
-                String password="root";
+                String url = "jdbc:mysql://localhost:3306/Biblioteca";
+                String user= "aluno";
+                String password="aluno";
                 conexao = DriverManager.getConnection(url, user, password);
                 System.out.println("conectado ao banco com sucesso!");
             }

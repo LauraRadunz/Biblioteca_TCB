@@ -1,4 +1,4 @@
-package br.edu.ifpr.model.dao;
+package br.edu.ifpr.biblioteca.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import br.edu.ifpr.model.Contato;
+import br.edu.ifpr.biblioteca.model.Contato;
+import br.edu.ifpr.biblioteca.model.Livro;
 
 public class ContatoDAO {
     //Create
@@ -26,7 +27,7 @@ public class ContatoDAO {
         }
     } 
 
-    public void salvar(Contato contato){
+    public void salvar(Livro livro){
         Connection con = ConnectionFactory.getConnection();
 
         //inserir o endereco primeiro

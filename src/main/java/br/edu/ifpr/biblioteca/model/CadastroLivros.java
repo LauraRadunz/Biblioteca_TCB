@@ -1,6 +1,5 @@
 package br.edu.ifpr.biblioteca.model;
 
-package Java;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,12 +10,14 @@ import java.io.ObjectOutputStream;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import br.edu.ifpr.biblioteca.controller.LivroController;
+
+import br.edu.ifpr.biblioteca.model.dao.LivroDAO;
+
 
 public class CadastroLivros {
     private static final String ARQUIVO = "livros.dat";
 
-    private ArrayList<Livro> livros = new ArrayList<>();    
+    private static ArrayList<Livro> livros = new ArrayList<>();    
 
     public CadastroLivros() {
         carregarLivros();
@@ -24,7 +25,7 @@ public class CadastroLivros {
 
     public void cadastrarLivros(Livro x) {
         livros.add(x);
-        cadastrarLivrosBD(x);
+        LivroDAO.salvarLivro(x);
     }
 
     public CadastroLivros(boolean carregar) {
@@ -49,10 +50,7 @@ public class CadastroLivros {
     }
 
     public CadastroLivros buscarLivrosPorTitulo(String palavra) {
-        // cria um CadastroLivros public class CadastroLivros {
-    
-}
-vazio (não carrega do arquivo)
+        // cria um CadastroLivros vazio (não carrega do arquivo)
         CadastroLivros encontrados = new CadastroLivros(false); // <<-- aqui está a diferença
 
         if (palavra == null) {
