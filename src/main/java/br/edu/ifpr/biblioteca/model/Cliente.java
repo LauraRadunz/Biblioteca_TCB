@@ -1,6 +1,7 @@
 package br.edu.ifpr.biblioteca.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -9,11 +10,20 @@ public class Cliente implements Serializable {
     private int registro;
     private String telefone;
     private String cpf;
+    private ArrayList<Emprestimo> emprestimosAtivos;
 
     public Cliente(String nome, String telefone, String cpf) {
         this.nome = nome;
         this.telefone = telefone;
         this.cpf = cpf;
+    }
+
+    public void setEmprestimosAtivos(ArrayList<Emprestimo> emprestimosAtivos) {
+        this.emprestimosAtivos = emprestimosAtivos;
+    }
+
+    public ArrayList<Emprestimo> getEmprestimosAtivos() {
+        return emprestimosAtivos;
     }
 
     public String getCpf() {

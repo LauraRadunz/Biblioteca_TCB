@@ -24,6 +24,25 @@ public class Emprestimo implements Serializable {
         this.renovacoes = 0;
     }
 
+    public Emprestimo() {
+        
+    }
+
+    public void setDataEmprestimo(LocalDate dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+    
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
 
     public int getCodEmprestimo() {
         return codEmprestimo;

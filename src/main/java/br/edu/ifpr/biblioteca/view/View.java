@@ -1,11 +1,13 @@
 package br.edu.ifpr.biblioteca.view;
 
 import br.edu.ifpr.biblioteca.controller.ClienteController;
+import br.edu.ifpr.biblioteca.controller.EmprestimoController;
 import br.edu.ifpr.biblioteca.controller.FuncionarioController;
 import br.edu.ifpr.biblioteca.controller.LivroController;
 import br.edu.ifpr.biblioteca.model.Cliente;
 import br.edu.ifpr.biblioteca.model.Funcionario;
 import br.edu.ifpr.biblioteca.model.Livro;
+import br.edu.ifpr.biblioteca.model.Emprestimo;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -264,14 +266,14 @@ public class View {
 
             switch (opcao) {
                 case 1 -> {
-                    emprestimos.listarEmprestimos("Empréstimos em aberto");
+                    Emprestimo emprestimo = lerEmprestimo();
+                    EmprestimoController.realizarEmprestimo(emprestimo);
                     break;
                 }
 
                 case 2 -> {
-                    Emprestimo emprestimo = lerEmprestimo();
-                    emprestimos.realizarEmprestimos(emprestimo);
-                    break;
+                    EmprestimoController.listarEmprestimos();    
+                    break;                
                     }
             
                 case 3 -> {
@@ -327,11 +329,11 @@ public class View {
 
     public static Emprestimo lerEmprestimo() {
         int codigoCliente = lerInteiro("Digite o código do cliente que está realizando o empréstimo");
-        Cliente cliente = clientes.buscarCliente(codigoCliente);
+        Cliente cliente = ClienteController.buscarCliente(codigoCliente);
         int codigoFuncionario = lerInteiro("Digite o código do funcionário que está realizando o empréstimo");
-        Funcionario funcionario = descobrirFuncionario(codigoFuncionario);
+        Funcionario funcionario = FuncionarioController.buscarFuncionario(codigoFuncionario);
         int codigoLivro = lerInteiro("Digite o código do livro que deseja emprestar");
-        Livro livro = descobrirLivroPorCodigo(codigoLivro);
+        Livro livro = LivroController.buscarLivroPorCodigo(codigoLivro);
         Emprestimo emprestimo = new Emprestimo(livro, cliente, funcionario);
         return emprestimo;
     }

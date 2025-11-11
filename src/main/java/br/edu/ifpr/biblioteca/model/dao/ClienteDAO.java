@@ -71,6 +71,9 @@ public class ClienteDAO {
                 c.setNome(rs.getString("nome"));
                 c.setTelefone(rs.getString("telefone"));
                 c.setCpf(rs.getString("cpf"));
+
+
+                // c.emprestimosAtivos = EmprestimoDAO.buscarEmprestimoPorCliente(codigo);
                 return c;
             }
 
