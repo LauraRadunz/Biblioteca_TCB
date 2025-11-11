@@ -3,33 +3,26 @@ package br.edu.ifpr.biblioteca.model;
 import javax.swing.JOptionPane;
 import java.io.Serializable;
 
-public class Livro implements Serializable{
+public class Livro implements Serializable {
     private int codigo;
+    
+
     private String nome;
     private int exemplares;
     private int emprestados;
     private String autor;
     private int ano;
 
-    private static int contador = 2001;
-
-    public static void setContador(int valor) {
-        contador = valor;
+    public Livro() {
     }
 
     public Livro(String nome, int exemplares, int emprestados, int ano, String autor) {
         this.nome = nome;
-        this.codigo = codigo + contador;
         this.exemplares = exemplares;
         this.emprestados = emprestados;
         this.ano = ano;
         this.autor = autor;
 
-        contador++;
-    }
-
-    public Livro() {
-        
     }
 
     public boolean emprestar() {
@@ -71,6 +64,10 @@ public class Livro implements Serializable{
 
     public int getCodigo() {
         return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public int getExemplares() {
