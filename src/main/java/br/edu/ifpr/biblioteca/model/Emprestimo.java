@@ -100,7 +100,7 @@ public class Emprestimo implements Serializable {
         this.renovacoes = renovacoes;
     }
 
-    public String imprimirEmprestimo() {
-        return "Código: " + codEmprestimo + " | Livro: " + livro.getNome() + " (" + livro.getAutor() + ") | Cliente: " + cliente.getNome();
+    public String imprimirEmprestimo(Emprestimo emp) {
+        return "Código: " + emp.codEmprestimo + "\nLivro: " + emp.livro.getNome() + " (" + emp.livro.getAutor() + ")\nCliente: " + emp.cliente.getNome()+" | Funcionario: " + emp.funcionario.getNome() + "\nData Empréstimo: " + emp.dataEmprestimo + " | Data Devolução Prevista: " + emp.dataDevolucaoPrevista + "\nRenovações: " + emp.renovacoes;
     }
 }

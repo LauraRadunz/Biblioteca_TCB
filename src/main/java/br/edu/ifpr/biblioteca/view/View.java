@@ -41,13 +41,13 @@ public class View {
                     menuFuncionarios();
                 }
 
-                // case 3 -> {
-                // menuClientes();
-                // }
+                case 3 -> {
+                menuClientes();
+                }
 
-                // case 4 -> {
-                // menuEmprestimos();
-                // }
+                case 4 -> {
+                menuEmprestimos();
+                }
 
                 default -> {
                     imprimirMensagemSaltada("Opção inválida!");
@@ -220,18 +220,17 @@ public class View {
                     break;
                 }
 
-                // case 4 -> {
-                //     int codigoCliente = lerInteiro("Digite o código do cliente que deseja buscar os empréstimos em aberto");
-                //     CadastroEmprestimos encontrados = new CadastroEmprestimos();
-                //     encontrados = emprestimos.buscarEmprestimo(codigoCliente);
-                //     if (encontrados == null) {
-                //         imprimirMensagemSaltada("Nenhum empréstimo em aberto encontrado para esse cliente");
-                //         break;
-                //     } else {
-                //         encontrados.listarEmprestimos("Empréstimos em aberto para o cliente de código " + codigoCliente);
-                //     }
-                //     break;
-                // }
+                case 4 -> {
+                    int codigoCliente = lerInteiro("Digite o código do cliente que deseja buscar os empréstimos em aberto");
+                    ArrayList<Emprestimo> encontrados = EmprestimoController.buscarEmprestimosAbertosPorCliente(codigoCliente);
+                    if (encontrados == null) {
+                        imprimirMensagemSaltada("Nenhum empréstimo em aberto encontrado para esse cliente");
+                        break;
+                    } else {
+                        EmprestimoController.listarEmprestimosDeUmCliente(encontrados, codigoCliente);
+                    }
+                    break;
+                }
 
                 case 5 -> {
                     int codigo = lerInteiro("Digite o código do cliente que deseja remover");
@@ -272,25 +271,26 @@ public class View {
                 }
 
                 case 2 -> {
-                    EmprestimoController.listarEmprestimos();    
+                    String mensagem = EmprestimoController.listarEmprestimos(); 
+                    imprimirMensagemSaltada(mensagem);   
                     break;                
                     }
             
                 case 3 -> {
                     int codigoEmprestimo = lerInteiro("Digite o código do empréstimo que deseja devolver");
-                    emprestimos.devolverLivro(codigoEmprestimo);
+                    EmprestimoController.devolverLivro(codigoEmprestimo);
                     break;
                 }
 
                 case 4 -> {
                     int codigoEmprestimo = lerInteiro("Digite o código do empréstimo que deseja renovar");
-                    emprestimos.renovarEmprestimo(codigoEmprestimo);
+                    EmprestimoController.renovarLivro(codigoEmprestimo);
                     break;
                 }
             
                 case 5 -> {
                     int codigoEmprestimo = lerInteiro("Digite o código do empréstimo que deseja especificar");
-                    Emprestimo emprestimo = emprestimos.buscarEmprestimoPorCodigo(codigoEmprestimo);
+                    Emprestimo emprestimo = EmprestimoController.buscarEmprestimo(codigoEmprestimo);
                     if (emprestimo == null) {
                         imprimirMensagemSaltada("Nenhum empréstimo encontrado com esse código");
                         break;
@@ -302,20 +302,19 @@ public class View {
         
                 case 6 -> {
                     int codigoCliente = lerInteiro("Digite o código do cliente que deseja buscar os empréstimos em aberto");
-                    CadastroEmprestimos encontrados = new CadastroEmprestimos();
-                    encontrados = emprestimos.buscarEmprestimo(codigoCliente);
+                    ArrayList<Emprestimo> encontrados = EmprestimoController.buscarEmprestimosAbertosPorCliente(codigoCliente);
                     if (encontrados == null) {
                         imprimirMensagemSaltada("Nenhum empréstimo em aberto encontrado para esse cliente");
                         break;
                     } else {
-                        encontrados.listarEmprestimos("Empréstimos em aberto para o cliente de código " + codigoCliente);
+                        EmprestimoController.listarEmprestimosDeUmCliente(encontrados, codigoCliente);
                     }
                     break;
                 }
     
                 case 7 -> {
                     int codigoEmprestimo = lerInteiro("Digite o código do empréstimo que deseja remover");
-                    emprestimos.removerEmprestimo(codigoEmprestimo);
+                    EmprestimoController.removerEmprestimo(codigoEmprestimo);
                     break;
                 }
 

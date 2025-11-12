@@ -3,8 +3,8 @@ package br.edu.ifpr.biblioteca.view;
 public class Menus {
     String menuPrincipal = "Selecione a área que deseja entrar:\n" +
             "0. Sair\n" +
-            "1. Funcionários\n" +
-            "2. Livros\n" +
+            "1. Livros\n" +
+            "2. Funcionários\n" +
             "3. Clientes\n" +
             "4. Empréstimos\n" ;
 
@@ -33,8 +33,8 @@ public class Menus {
 
     String menuEmprestimos = "Selecione a ação que gostaria de realizar:\n" + 
             "0. Voltar ao menu principal\n" +
-            "1. Listar empréstimos em aberto\n" +
-            "2. Realizar empréstimo\n" +
+            "1. Realizar empréstimo\n" +
+            "2. Listar empréstimos em aberto\n" +
             "3. Realizar devolução\n" +
             "4. Realizar renovação\n" +
             "5. Especificar um empréstimo pelo código do empréstimo\n" +

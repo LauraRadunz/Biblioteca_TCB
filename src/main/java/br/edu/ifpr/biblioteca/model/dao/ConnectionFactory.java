@@ -14,8 +14,8 @@ public class ConnectionFactory {
             if(conexao==null){
                 //jdbc:gdbd://ip do servidor do BD:porta/database
                 String url = "jdbc:mysql://localhost:3306/Biblioteca";
-                String user= "aluno";
-                String password="aluno";
+                String user= "Laura";
+                String password="LRPMYSQLlrpmysql2828";
                 conexao = DriverManager.getConnection(url, user, password);
                 System.out.println("conectado ao banco com sucesso!");
             }
