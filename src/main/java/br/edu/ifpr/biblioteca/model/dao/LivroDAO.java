@@ -53,14 +53,11 @@ public class LivroDAO {
 
                 rs.close();
                 psLivro.close();
-                con.close();
-
                 return livro;
             }
 
             rs.close();
             psLivro.close();
-            con.close();
 
             // não achou
             return null;
@@ -94,7 +91,6 @@ public class LivroDAO {
 
             rs.close();
             ps.close();
-            con.close();
 
             return lista;
 
@@ -129,7 +125,6 @@ public class LivroDAO {
 
             rs.close();
             ps.close();
-            con.close();
 
             return lista;
 
@@ -150,7 +145,6 @@ public class LivroDAO {
     
             ps.executeUpdate();
             ps.close();
-            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

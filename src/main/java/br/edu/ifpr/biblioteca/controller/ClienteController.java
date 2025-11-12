@@ -24,8 +24,16 @@ public class ClienteController {
         return ClienteDAO.buscarClienteDAO(codigo);
     }
 
+    public static void buscarClienteEEmprestimos(int codigo) {
+        String mensagem = ClienteDAO.buscarClienteeEmprestimosDAO(codigo);
+        JOptionPane.showMessageDialog(null, mensagem);
+
+    }
+
     public static void removerCliente(int codigo) {
-        ClienteDAO.removerClienteDAO(codigo);
+        if (ClienteDAO.removerClienteDAO(codigo)) {
+            JOptionPane.showMessageDialog(null, "Cliente removido com sucesso!");
+        }
     }
 }
 

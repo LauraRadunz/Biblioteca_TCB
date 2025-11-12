@@ -19,7 +19,6 @@ public class FuncionarioDAO {
 
             ps.executeUpdate();
             ps.close();
-            con.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,7 +44,6 @@ public class FuncionarioDAO {
 
             rs.close();
             ps.close();
-            con.close();
 
         } catch (Exception e) {
             e.printStackTrace();

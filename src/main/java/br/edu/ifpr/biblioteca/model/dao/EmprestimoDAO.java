@@ -86,7 +86,6 @@ public class EmprestimoDAO {
                 lista.add(emprestimo);
             }
     
-            con.close();
             return lista;
     
         } catch (SQLException e) {
@@ -130,7 +129,6 @@ public class EmprestimoDAO {
         psLivro.setInt(1, idLivro);
         psLivro.executeUpdate();
 
-        con.close();
     
         return dataPrevista;
 
@@ -223,7 +221,6 @@ public class EmprestimoDAO {
                 lista.add(emprestimo);
             }
 
-            con.close();
             return lista;
 
         } catch (SQLException e) {
@@ -241,7 +238,6 @@ public class EmprestimoDAO {
             ps.setInt(1, idEmprestimo);
 
             int linhas = ps.executeUpdate();
-            con.close();
 
             return linhas > 0; // se removeu pelo menos 1 linha, deu certo
         } catch (SQLException e) {
