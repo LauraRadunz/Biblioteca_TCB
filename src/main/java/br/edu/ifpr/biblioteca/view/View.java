@@ -210,13 +210,7 @@ public class View {
 
                 case 3 -> {
                     int codigo = lerInteiro("Digite o código do cliente que deseja buscar");
-                    Cliente cliente = ClienteController.buscarCliente(codigo);
-                    if (cliente == null) {
-                        imprimirMensagemSaltada("Nenhum cliente encontrado com esse código");
-                        break;
-                    } else {
-                        cliente.imprimirCliente(cliente);
-                    }
+                    ClienteController.buscarCliente(codigo);
                     break;
                 }
 
