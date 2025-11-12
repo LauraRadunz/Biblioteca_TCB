@@ -1,6 +1,9 @@
 package br.edu.ifpr.biblioteca.model;
 
 import java.time.LocalDate;
+
+import br.edu.ifpr.biblioteca.view.View;
+
 import java.io.Serializable;
 
 public class Emprestimo implements Serializable {
@@ -100,7 +103,9 @@ public class Emprestimo implements Serializable {
         this.renovacoes = renovacoes;
     }
 
-    public String imprimirEmprestimo(Emprestimo emp) {
-        return "Código: " + emp.codEmprestimo + "\nLivro: " + emp.livro.getNome() + " (" + emp.livro.getAutor() + ")\nCliente: " + emp.cliente.getNome()+" | Funcionario: " + emp.funcionario.getNome() + "\nData Empréstimo: " + emp.dataEmprestimo + " | Data Devolução Prevista: " + emp.dataDevolucaoPrevista + "\nRenovações: " + emp.renovacoes;
+    public void imprimirEmprestimo(Emprestimo emp) {
+        String mensagem = "Código: " + emp.codEmprestimo + "\nLivro: " + emp.livro.getNome() + " (" + emp.livro.getAutor() + ")\nCliente: " + emp.cliente.getNome()+" | Funcionario: " + emp.funcionario.getNome() + "\nData Empréstimo: " + emp.dataEmprestimo + " | Data Devolução Prevista: " + emp.dataDevolucaoPrevista + "\nRenovações: " + emp.renovacoes + " | Devolvido: " + emp.isDevolvido();
+        View.imprimirMensagemSaltada(mensagem);
     }
+
 }

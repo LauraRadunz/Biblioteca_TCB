@@ -22,11 +22,16 @@ public class LivroController {
     }
 
     public static Livro buscarLivroPorCodigo(int codigo) {
-        Livro livro = LivroDAO.buscarLivroPorCodigoDAO(codigo);
-        if (livro != null) {
-            return livro;
+        boolean verificacao = LivroDAO.verificarLivroExistente(codigo);
+        if (verificacao) {
+            Livro livro = LivroDAO.buscarLivroPorCodigoDAO(codigo);
+            if (livro != null) {
+                return livro;
+            } else {
+                return null;
+            }
         } else {
-            System.out.println("Livro não encontrado");
+            JOptionPane.showMessageDialog(null, "Livro não encontrado, insira um código válido.");
             return null;
         }
     }

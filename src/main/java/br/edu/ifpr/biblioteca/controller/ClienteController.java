@@ -21,7 +21,14 @@ public class ClienteController {
     }
 
     public static Cliente buscarCliente(int codigo) {
-        return ClienteDAO.buscarClienteDAO(codigo);
+        boolean verificacao = false;
+        verificacao = ClienteDAO.verificarClienteExistente(codigo);
+        if (verificacao) {
+            return ClienteDAO.buscarClienteDAO(codigo);
+        } else {
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado, insira um código válido.");
+            return null;
+        }
     }
 
     public static void buscarClienteEEmprestimos(int codigo) {

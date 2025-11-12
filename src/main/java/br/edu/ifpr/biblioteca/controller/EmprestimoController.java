@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import br.edu.ifpr.biblioteca.model.Emprestimo;
+import br.edu.ifpr.biblioteca.model.dao.ClienteDAO;
 import br.edu.ifpr.biblioteca.model.dao.EmprestimoDAO;
 
 public class EmprestimoController {
@@ -25,7 +26,6 @@ public class EmprestimoController {
     public static String listarEmprestimos() {
         ArrayList<Emprestimo> listaEmprestimos = EmprestimoDAO.listarEmprestimos();
         if (listaEmprestimos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum empréstimo encontrado.");
             return "Nenhum empréstimo encontrado.";            
         }
 
@@ -42,7 +42,8 @@ public class EmprestimoController {
     }
 
     public static void devolverLivro(int codEmprestimo) {
-        if (codEmprestimo <= 0) {
+        boolean verificacao = EmprestimoDAO.verificarEmprestimoExistente(codEmprestimo);
+        if (verificacao == false) {
             JOptionPane.showMessageDialog(null, "Código de empréstimo inválido.");
             return;
         }
@@ -66,6 +67,12 @@ public class EmprestimoController {
     }
 
     public static void renovarLivro(int idEmprestimo) {
+        boolean verificacao = EmprestimoDAO.verificarEmprestimoExistente(idEmprestimo);
+        if (verificacao == false) {
+            JOptionPane.showMessageDialog(null, "Código de empréstimo inválido.");
+            return;
+        }
+
         // Buscar informações do empréstimo no banco
         Emprestimo emprestimo = EmprestimoDAO.buscarEmprestimoPorId(idEmprestimo);
 
@@ -96,16 +103,26 @@ public class EmprestimoController {
     }
 
     public static Emprestimo buscarEmprestimo(int idEmprestimo) {
+        boolean verificacao = EmprestimoDAO.verificarEmprestimoExistente(idEmprestimo);
+        if (verificacao == false) {
+            JOptionPane.showMessageDialog(null, "Código de empréstimo inválido.");
+            return null;            
+        }
+
         Emprestimo emprestimo = EmprestimoDAO.buscarEmprestimoPorId(idEmprestimo);
         if (emprestimo != null) {
             return emprestimo;
         } else {
-            JOptionPane.showMessageDialog(null,"Empréstimo não encontrado");
             return null;
         }
     }
 
     public static ArrayList<Emprestimo> buscarEmprestimosAbertosPorCliente(int idCliente) {
+        boolean verificacao = ClienteDAO.verificarClienteExistente(idCliente);
+        if (verificacao == false) {
+            JOptionPane.showMessageDialog(null, "Código de cliente inválido.");
+            return new ArrayList<>();            
+        }
         ArrayList<Emprestimo> emprestimos = EmprestimoDAO.buscarEmprestimosAbertosPorClienteDAO(idCliente);
         if (emprestimos != null && !emprestimos.isEmpty()) {
             return emprestimos;
@@ -116,29 +133,38 @@ public class EmprestimoController {
     }
 
     public static void listarEmprestimosDeUmCliente (ArrayList<Emprestimo> listaEmprestimos, int idCliente) {
-        if (listaEmprestimos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum empréstimo encontrado.");
-            return;            
+        boolean verificacao = ClienteDAO.verificarClienteExistente(idCliente);
+        if (verificacao) {
+            if (listaEmprestimos.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Nenhum empréstimo encontrado para o cliente do id: " + idCliente);
+                return;            
+            }
+    
+            String mensagem = "Empréstimos em aberto do cliente do id: " + idCliente + "\n";
+            for (Emprestimo emp : listaEmprestimos) {
+                mensagem += "\nCódigo: " + emp.getCodEmprestimo() +
+                            " | Cliente: " + emp.getCliente().getNome() +
+                            " | Livro: " + emp.getLivro().getNome() +
+                            " | Data Empréstimo: " + emp.getDataEmprestimo() +
+                            " | Data Devolução Prevista: " + emp.getDataDevolucaoPrevista() +
+                            " | Renovacoes: " + emp.getRenovacoes() + "\n";
+            }
+            JOptionPane.showMessageDialog(null, mensagem);
         }
-
-        String mensagem = "Empréstimos em aberto do cliente do id: " + idCliente + "\n";
-        for (Emprestimo emp : listaEmprestimos) {
-            mensagem += "Código: " + emp.getCodEmprestimo() +
-                        ", Cliente: " + emp.getCliente().getNome() +
-                        ", Livro: " + emp.getLivro().getNome() +
-                        ", Data Empréstimo: " + emp.getDataEmprestimo() +
-                        ", Data Devolução Prevista: " + emp.getDataDevolucaoPrevista() +
-                        ", Renovacoes: " + emp.getRenovacoes() + "\n";
-        }
-        JOptionPane.showMessageDialog(null, mensagem);
     }
 
     public static void removerEmprestimo(int idEmprestimo) {
-        boolean sucesso = EmprestimoDAO.removerEmprestimoDAO(idEmprestimo);
-        if (sucesso) {
-            JOptionPane.showMessageDialog(null, "Empréstimo removido com sucesso.");
+        boolean verificacao = EmprestimoDAO.verificarEmprestimoExistente(idEmprestimo);
+        if (verificacao) {
+            
+            boolean sucesso = EmprestimoDAO.removerEmprestimoDAO(idEmprestimo);
+            if (sucesso) {
+                JOptionPane.showMessageDialog(null, "Empréstimo removido com sucesso.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao remover o empréstimo.");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Erro ao remover o empréstimo.");
+            JOptionPane.showMessageDialog(null, "Código de empréstimo inválido.");
         }
     }
 }

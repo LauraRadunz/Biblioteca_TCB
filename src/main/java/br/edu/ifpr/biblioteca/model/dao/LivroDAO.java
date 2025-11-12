@@ -11,12 +11,34 @@ import javax.swing.JOptionPane;
 import br.edu.ifpr.biblioteca.model.Livro;
 
 public class LivroDAO {
-    // Create
+
+    public static boolean verificarLivroExistente(int idLivro) {
+        String sql = "SELECT EXISTS (SELECT 1 FROM Livro WHERE idLivro = ?)";
+
+        // Todos os recursos abertos aqui (con, ps, rs) serão fechados automaticamente
+        try (Connection con = ConnectionFactory.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, idLivro);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (rs.next()) {
+                    return rs.getInt(1) == 1;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public static void inserirLivro(Livro livro) {
         String sqlLivro = "INSERT INTO Livro(nome,ano,autor,total,emprestados) VALUES(?,?,?,?,?)";
-        Connection con = ConnectionFactory.getConnection();
-        try {
-            PreparedStatement psLivro = con.prepareStatement(sqlLivro);
+
+        try (Connection con = ConnectionFactory.getConnection();
+                PreparedStatement psLivro = con.prepareStatement(sqlLivro)) {
             psLivro.setString(1, livro.getNome());
             psLivro.setInt(2, livro.getAno());
             psLivro.setString(3, livro.getAutor());
@@ -24,57 +46,46 @@ public class LivroDAO {
             psLivro.setInt(5, livro.getEmprestados());
 
             psLivro.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Livro inserido com sucesso");	
+            JOptionPane.showMessageDialog(null, "Livro inserido com sucesso");
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    public static Livro buscarLivroPorCodigoDAO(int codigo) {
-        String sqlLivro = "SELECT * FROM Livro WHERE idLivro = ?";
-        Connection con = ConnectionFactory.getConnection();
+    public static Livro buscarLivroPorCodigoDAO(int idLivro) {
+        String sql = "SELECT * FROM Livro WHERE idLivro = ?";
+        Livro livroEncontrado = null;
+        try (Connection con = ConnectionFactory.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
 
-        try {
-            PreparedStatement psLivro = con.prepareStatement(sqlLivro);
-            psLivro.setInt(1, codigo);
+            ps.setInt(1, idLivro);
 
-            ResultSet rs = psLivro.executeQuery();
-
-            if (rs.next()) {
-
-                Livro livro = new Livro();
-                livro.setCodigo(rs.getInt("idLivro"));
-                livro.setNome(rs.getString("nome"));
-                livro.setAutor(rs.getString("autor"));
-                livro.setAno(rs.getInt("ano")); // se tiver esse campo, exemplo
-                livro.setExemplares(rs.getInt("total"));
-                livro.setEmprestados(rs.getInt("emprestados"));
-
-                rs.close();
-                psLivro.close();
-                return livro;
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    livroEncontrado = new Livro();
+                    livroEncontrado.setCodigo(idLivro);
+                    livroEncontrado.setNome(rs.getString("nome"));
+                    livroEncontrado.setAutor(rs.getString("autor"));
+                    livroEncontrado.setAno(rs.getInt("ano"));
+                    livroEncontrado.setExemplares(rs.getInt("total"));
+                    livroEncontrado.setEmprestados(rs.getInt("emprestados"));
+                }
             }
 
-            rs.close();
-            psLivro.close();
-
-            // não achou
-            return null;
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
+
+        return livroEncontrado;
     }
 
     public static ArrayList<Livro> listarLivrosDAO() {
         ArrayList<Livro> lista = new ArrayList<>();
         String sql = "SELECT * FROM Livro";
-        Connection con = ConnectionFactory.getConnection();
 
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -104,10 +115,9 @@ public class LivroDAO {
         ArrayList<Livro> lista = new ArrayList<>();
 
         String sql = "SELECT * FROM Livro WHERE nome LIKE ?";
-        Connection con = ConnectionFactory.getConnection();
 
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection con = ConnectionFactory.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, "%" + palavra + "%"); // com % para pegar partes
 
             ResultSet rs = ps.executeQuery();
@@ -136,31 +146,26 @@ public class LivroDAO {
 
     public static void atualizarEmprestados(Livro livro) {
         String sql = "UPDATE Livro SET emprestados = ? WHERE idLivro = ?";
-        Connection con = ConnectionFactory.getConnection();
-    
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+
+        try (Connection con = ConnectionFactory.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, livro.getEmprestados());
             ps.setInt(2, livro.getCodigo());
-    
+
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }    
+    }
 
     public static void removerLivroDAO(int codigo) {
         String sqlLivro = "DELETE FROM Livro WHERE idLivro = ?";
-        Connection con = ConnectionFactory.getConnection();
 
-        try {
-            PreparedStatement psLivro = con.prepareStatement(sqlLivro);
-
-            // Define o valor do parâmetro (substitui o "?")
+        try (Connection con = ConnectionFactory.getConnection();
+                PreparedStatement psLivro = con.prepareStatement(sqlLivro)) {
             psLivro.setInt(1, codigo);
 
-            // Executa o comando
             int linhasAfetadas = psLivro.executeUpdate();
 
             if (linhasAfetadas > 0) {

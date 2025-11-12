@@ -21,17 +21,29 @@ public class FuncionarioController {
     }
 
     public static Funcionario buscarFuncionario(int codigo) {
-        Funcionario funcionario = FuncionarioDAO.buscarFuncionarioDAO(codigo);
-        if (funcionario != null) {
-            return funcionario;
+        boolean verificacao = FuncionarioDAO.verificarFuncionarioExistente(codigo);
+        if (verificacao) {
+            
+            Funcionario funcionario = FuncionarioDAO.buscarFuncionarioDAO(codigo);
+            if (funcionario != null) {
+                return funcionario;
+            } else {
+                JOptionPane.showMessageDialog(null,"Funcionário não encontrado");
+                return null;
+            }
         } else {
-            JOptionPane.showMessageDialog(null,"Funcionário não encontrado");
+            JOptionPane.showMessageDialog(null, "Funcionário não encontrado, insira um código válido.");
             return null;
         }
     }
 
     public static void removerFuncionario(int codigo) {
-        FuncionarioDAO.removerFuncionarioDAO(codigo);
+        boolean verificacao = FuncionarioDAO.verificarFuncionarioExistente(codigo);
+        if (verificacao) {
+            FuncionarioDAO.removerFuncionarioDAO(codigo);
+        } else {
+            JOptionPane.showMessageDialog(null, "Funcionário não encontrado, insira um código válido.");
+        }
     }
 }
 

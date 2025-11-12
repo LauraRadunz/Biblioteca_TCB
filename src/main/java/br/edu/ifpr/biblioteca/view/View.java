@@ -210,7 +210,7 @@ public class View {
 
                 case 3 -> {
                     int codigo = lerInteiro("Digite o código do cliente que deseja buscar");
-                    ClienteController.buscarCliente(codigo);
+                    ClienteController.buscarClienteEEmprestimos(codigo);
                     break;
                 }
 
