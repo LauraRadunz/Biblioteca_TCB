@@ -9,7 +9,7 @@ public class ConnectionFactory {
     // --- C do TiDB Cloud ---
     
     // 1. Host (Endereço)
-    private static final String HOST = "gateway01.us-east-1.prod.aws.tidb.cloud";
+    private static final String HOST = "gateway01.us-east-1.prod.aws.tidbcloud.com";
     
     // 2. Port (Porta)
     private static final String PORT = "4000";
@@ -18,7 +18,7 @@ public class ConnectionFactory {
     private static final String DATABASE = "test";
     
     // 4. User (Usuário)
-    private static final String USER = "2QjTfCmUjXizSPv4.root";
+    private static final String USER = "2CijTfCmUXzSPv4.root";
     
     // 5. PASSWORD (Senha)
     private static final String PASSWORD = "uf783Usq9z1PGvoa"; 
