@@ -1,49 +1,27 @@
 package br.edu.ifpr.biblioteca.controller;
+import java.sql.SQLException; 
 import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
 import br.edu.ifpr.biblioteca.model.Funcionario;
 import br.edu.ifpr.biblioteca.model.dao.FuncionarioDAO;
 
 public class FuncionarioController {
 
-    public static void cadastrarFuncionario(Funcionario f) {
+    public static void cadastrarFuncionario(Funcionario f) throws SQLException, IllegalArgumentException {
         if (f.getNome() == null || f.getNome().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nome não pode ser vazio, funcionário não cadastrado.");
-            return;
+            throw new IllegalArgumentException("Nome não pode ser vazio");
         }
-        FuncionarioDAO.cadastrarFuncionarioDAO(f);
+        FuncionarioDAO.cadastrarFuncionarioDAO(f); 
     }
 
-    public static ArrayList<Funcionario> listarFuncionarios() {
+    public static ArrayList<Funcionario> listarFuncionarios() throws SQLException {
         return FuncionarioDAO.listarFuncionariosDAO();
     }
 
-    public static Funcionario buscarFuncionario(int codigo) {
-        boolean verificacao = FuncionarioDAO.verificarFuncionarioExistente(codigo);
-        if (verificacao) {
-            
-            Funcionario funcionario = FuncionarioDAO.buscarFuncionarioDAO(codigo);
-            if (funcionario != null) {
-                return funcionario;
-            } else {
-                JOptionPane.showMessageDialog(null,"Funcionário não encontrado");
-                return null;
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Funcionário não encontrado, insira um código válido.");
-            return null;
-        }
+    public static Funcionario buscarFuncionario(int codigo) throws SQLException {
+        return FuncionarioDAO.buscarFuncionarioDAO(codigo); 
     }
 
-    public static void removerFuncionario(int codigo) {
-        boolean verificacao = FuncionarioDAO.verificarFuncionarioExistente(codigo);
-        if (verificacao) {
-            FuncionarioDAO.removerFuncionarioDAO(codigo);
-        } else {
-            JOptionPane.showMessageDialog(null, "Funcionário não encontrado, insira um código válido.");
-        }
+    public static boolean removerFuncionario(int codigo) throws SQLException {
+        return FuncionarioDAO.removerFuncionarioDAO(codigo);
     }
 }
-

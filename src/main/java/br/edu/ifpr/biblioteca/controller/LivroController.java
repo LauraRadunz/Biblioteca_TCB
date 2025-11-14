@@ -1,59 +1,33 @@
 package br.edu.ifpr.biblioteca.controller;
 
+import java.sql.SQLException; // Importe!
 import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
 import br.edu.ifpr.biblioteca.model.Livro;
 import br.edu.ifpr.biblioteca.model.dao.LivroDAO;
 
 public class LivroController {
 
-    public void cadastrarLivro(Livro livro){
+    public void cadastrarLivro(Livro livro) throws SQLException, IllegalArgumentException {
         if(livro.getNome() == null  || livro.getNome().isEmpty()){
-            System.out.println("Nome não pode ser vazio");
-            return;
+            throw new IllegalArgumentException("Nome não pode ser vazio");
         }
-        LivroDAO.inserirLivro(livro);        
+        LivroDAO.inserirLivro(livro);
     }
 
-    public static void removerLivro(int codigo) {
-        LivroDAO.removerLivroDAO(codigo);
+    public static boolean removerLivro(int codigo) throws SQLException {
+        return LivroDAO.removerLivroDAO(codigo);
     }
 
-    public static Livro buscarLivroPorCodigo(int codigo) {
-        boolean verificacao = LivroDAO.verificarLivroExistente(codigo);
-        if (verificacao) {
-            Livro livro = LivroDAO.buscarLivroPorCodigoDAO(codigo);
-            if (livro != null) {
-                return livro;
-            } else {
-                return null;
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Livro não encontrado, insira um código válido.");
-            return null;
-        }
+    public static Livro buscarLivroPorCodigo(int codigo) throws SQLException {
+        return LivroDAO.buscarLivroPorCodigoDAO(codigo);
     }
 
-    public static void listarLivros(String tipo) {
-    ArrayList<Livro> livros = LivroDAO.listarLivrosDAO();
-    imprimirListaDeLivros(livros, tipo);
+    public static ArrayList<Livro> listarLivros() throws SQLException {
+        return LivroDAO.listarLivrosDAO();
     }
+    
 
-    public static ArrayList<Livro> buscarLivrosPorTitulo(String palavra) {
+    public static ArrayList<Livro> buscarLivrosPorTitulo(String palavra) throws SQLException {
         return LivroDAO.buscarLivrosPorTituloDAO(palavra);
     }
-
-    public static void imprimirListaDeLivros(ArrayList<Livro> lista, String tituloMsg) {
-        StringBuilder mensagem = new StringBuilder(tituloMsg + ":\n");
-        for (Livro livro : lista) {
-            mensagem.append("Código: ").append(livro.getCodigo())
-                    .append(" | Título: ").append(livro.getNome())
-                    .append(" | Disponíveis: ").append(livro.getDisponiveis())
-                    .append("\n");
-        }
-        JOptionPane.showMessageDialog(null, mensagem);
-    }
-
 }
