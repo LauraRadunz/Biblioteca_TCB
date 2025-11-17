@@ -10,27 +10,28 @@ import java.util.ArrayList;
 
 public class PainelFuncionarios extends JPanel {
 
-    private JButton btnCadastrar, btnListar, btnRemover, btnBuscarPorCodigo; // NOVO BOTÃO
+    // Componentes dessa aba
+    private JButton btnCadastrar, btnListar, btnRemover, btnBuscarPorCodigo; 
     private JTable tabela;
     private DefaultTableModel modeloTabela;
 
     public PainelFuncionarios() {
         setLayout(new BorderLayout());
 
-        // --- 1. Painel de Botões (Norte) ---
+        // Painel de botões
         JPanel painelBotoes = new JPanel();
 
         btnCadastrar = new JButton("Cadastrar Novo Funcionário");
         btnListar = new JButton("Listar/Atualizar Funcionários");
         btnRemover = new JButton("Remover Funcionário Selecionado");
-        btnBuscarPorCodigo = new JButton("Buscar por Código"); // NOVO
+        btnBuscarPorCodigo = new JButton("Buscar por Código"); 
 
         painelBotoes.add(btnCadastrar);
         painelBotoes.add(btnListar);
         painelBotoes.add(btnRemover);
-        painelBotoes.add(btnBuscarPorCodigo); // NOVO
+        painelBotoes.add(btnBuscarPorCodigo); 
 
-        // --- 2. Tabela (Centro) ---
+        // Tabela
         String[] colunas = { "Código", "Nome", "Salário" };
         modeloTabela = new DefaultTableModel(colunas, 0) {
             public boolean isCellEditable(int row, int column) {
@@ -39,17 +40,17 @@ public class PainelFuncionarios extends JPanel {
         };
         tabela = new JTable(modeloTabela);
 
-        // --- 3. Adiciona os painéis à tela ---
+        // Vai adicionar os paineis na tela
         add(painelBotoes, BorderLayout.NORTH);
         add(new JScrollPane(tabela), BorderLayout.CENTER);
 
-        // --- 4. Ações dos Botões ---
+        // As ações dos botões
         btnListar.addActionListener(e -> atualizarTabela());
         btnCadastrar.addActionListener(e -> cadastrarFuncionario());
         btnRemover.addActionListener(e -> removerFuncionario());
-        btnBuscarPorCodigo.addActionListener(e -> buscarFuncionario()); // NOVO
+        btnBuscarPorCodigo.addActionListener(e -> buscarFuncionario()); 
 
-        atualizarTabela(); // Carrega os dados iniciais
+        atualizarTabela(); 
     }
 
     private void atualizarTabela() {
@@ -124,15 +125,12 @@ public class PainelFuncionarios extends JPanel {
         }
     }
 
-    // --- NOVO MÉTODO ---
     private void buscarFuncionario() {
         try {
             int codigo = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o código do funcionário:"));
 
-            // 1. Chama o controller 'silencioso'
             Funcionario func = FuncionarioController.buscarFuncionario(codigo);
 
-            // 2. A View decide o que mostrar
             if (func != null) {
                 String mensagem = "Funcionário Encontrado:\n\n" +
                         "Código: " + func.getCodigo() + "\n" +

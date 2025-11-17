@@ -1,6 +1,6 @@
 package br.edu.ifpr.biblioteca.controller;
 
-import java.sql.SQLException; // Importe!
+import java.sql.SQLException;
 import java.util.ArrayList;
 import br.edu.ifpr.biblioteca.model.Livro;
 import br.edu.ifpr.biblioteca.model.dao.LivroDAO;

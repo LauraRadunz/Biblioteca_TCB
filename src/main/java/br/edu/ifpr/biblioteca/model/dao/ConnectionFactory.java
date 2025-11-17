@@ -6,25 +6,23 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 
-    // --- C do TiDB Cloud ---
+    // Banco está no TBCloud
     
-    // 1. Host (Endereço)
+    // 1. Endereço
     private static final String HOST = "gateway01.us-east-1.prod.aws.tidbcloud.com";
     
-    // 2. Port (Porta)
+    // 2. Porta
     private static final String PORT = "4000";
     
-    // 3. Database (Banco).
+    // 3. Bando de dados
     private static final String DATABASE = "test";
     
-    // 4. User (Usuário)
+    // 4. Ususário
     private static final String USER = "2CijTfCmUXzSPv4.root";
     
-    // 5. PASSWORD (Senha)
+    // 5. Senha
     private static final String PASSWORD = "uf783Usq9z1PGvoa"; 
     
-    // --- Fim da Configuração ---
-
     // URL de conexão
     private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE + "?useSSL=true&requireSSL=true";
 

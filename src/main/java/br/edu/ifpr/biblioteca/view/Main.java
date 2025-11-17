@@ -1,13 +1,13 @@
 package br.edu.ifpr.biblioteca.view;
 
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager; // 1. IMPORTE O UIManager
+import javax.swing.UIManager;
 
 public class Main {
 
     public static void main(String[] args) {
         
-        try {
+        try { // Setar o modelo de exibição, tipo, o LookAndFeel é uma aparência
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();

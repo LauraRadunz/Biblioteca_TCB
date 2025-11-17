@@ -1,9 +1,9 @@
 package br.edu.ifpr.biblioteca.view; 
 
 import br.edu.ifpr.biblioteca.controller.ClienteController;
-import br.edu.ifpr.biblioteca.controller.EmprestimoController; // Importa o outro controller!
+import br.edu.ifpr.biblioteca.controller.EmprestimoController; 
 import br.edu.ifpr.biblioteca.model.Cliente;
-import br.edu.ifpr.biblioteca.model.Emprestimo; // Importa o modelo
+import br.edu.ifpr.biblioteca.model.Emprestimo;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -12,44 +12,46 @@ import java.util.ArrayList;
 
 public class PainelClientes extends JPanel {
 
-    private JButton btnCadastrar, btnListar, btnRemover, btnBuscarDetalhes; // NOVO BOTÃO
-    private JTable tabela;
+    // Componentes dessa aba
+    private JButton btnCadastrar, btnListar, btnRemover, btnBuscarDetalhes; //Pra criar os botões dessa aba
+    private JTable tabela; // Tabela de Clientes
     private DefaultTableModel modeloTabela;
 
     public PainelClientes() {
         setLayout(new BorderLayout());
         
-        JPanel painelBotoes = new JPanel();
+        // Criação dos botões dessa aba
+        JPanel painelBotoes = new JPanel(); 
         btnCadastrar = new JButton("Cadastrar Novo Cliente");
         btnListar = new JButton("Listar/Atualizar Clientes");
         btnRemover = new JButton("Remover Cliente Selecionado");
-        btnBuscarDetalhes = new JButton("Buscar Detalhes (com Empréstimos)"); // NOVO
+        btnBuscarDetalhes = new JButton("Buscar Detalhes (com Empréstimos)");
 
+        // Adiciona os botões criados no painel
         painelBotoes.add(btnCadastrar);
         painelBotoes.add(btnListar);
         painelBotoes.add(btnRemover);
-        painelBotoes.add(btnBuscarDetalhes); // NOVO
+        painelBotoes.add(btnBuscarDetalhes); 
 
-        String[] colunas = {"Registro", "Nome", "Telefone", "CPF"};
+        String[] colunas = {"Registro", "Nome", "Telefone", "CPF"}; // Colunas da tabela
         modeloTabela = new DefaultTableModel(colunas, 0) {
             public boolean isCellEditable(int row, int column) { return false; }
         };
-        tabela = new JTable(modeloTabela);
+        tabela = new JTable(modeloTabela); // Coloca o modelo da tabela na tabela
 
-        add(painelBotoes, BorderLayout.NORTH);
-        add(new JScrollPane(tabela), BorderLayout.CENTER);
+        add(painelBotoes, BorderLayout.NORTH); // O painel de botões vai ficar na parte de cima
+        add(new JScrollPane(tabela), BorderLayout.CENTER); // A tabela vai ficar no centro
 
-        // --- Ações dos Botões ---
+        // Ações que cada botão faz
         btnListar.addActionListener(e -> atualizarTabela());
         btnCadastrar.addActionListener(e -> cadastrarCliente());
         btnRemover.addActionListener(e -> removerCliente());
-        btnBuscarDetalhes.addActionListener(e -> buscarClienteDetalhes()); // NOVO
+        btnBuscarDetalhes.addActionListener(e -> buscarClienteDetalhes()); 
         
         atualizarTabela(); 
     }
 
     private void atualizarTabela() {
-        // ... (igual ao que já refatoramos) ...
         modeloTabela.setRowCount(0);
         try {
             ArrayList<Cliente> clientes = ClienteController.listarClientes();
@@ -67,7 +69,6 @@ public class PainelClientes extends JPanel {
     }
 
     private void cadastrarCliente() {
-        // ... (igual ao que já refatoramos) ...
         try {
             String nome = JOptionPane.showInputDialog(this, "Nome do cliente:");
             String telefone = JOptionPane.showInputDialog(this, "Telefone:");
@@ -87,7 +88,6 @@ public class PainelClientes extends JPanel {
     }
 
     private void removerCliente() {
-        // ... (igual ao que já refatoramos) ...
         int linhaSelecionada = tabela.getSelectedRow();
         if (linhaSelecionada == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um cliente na tabela.", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -111,22 +111,18 @@ public class PainelClientes extends JPanel {
         }
     }
     
-    // --- NOVO MÉTODO (BUSCA COMPLEXA) ---
     private void buscarClienteDetalhes() {
         try {
             int codigo = Integer.parseInt(JOptionPane.showInputDialog(this, "Digite o REGISTRO do cliente:"));
             
-            // 1. Busca os dados do Cliente
             Cliente cliente = ClienteController.buscarCliente(codigo);
             if (cliente == null) {
                 JOptionPane.showMessageDialog(this, "Nenhum cliente encontrado com o registro " + codigo, "Não Encontrado", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             
-            // 2. Busca os Empréstimos ABERTOS desse cliente
             ArrayList<Emprestimo> emprestimos = EmprestimoController.buscarEmprestimosPorCliente(codigo);
             
-            // 3. Monta a mensagem de exibição
             StringBuilder mensagem = new StringBuilder();
             mensagem.append("--- Dados do Cliente ---\n");
             mensagem.append("Registro: ").append(cliente.getRegistro()).append("\n");
@@ -146,7 +142,7 @@ public class PainelClientes extends JPanel {
                 }
             }
             
-            // 4. Exibe o resultado em um pop-up (usando JTextArea para formatar)
+            // Vai exibir o resultado em um pop-up, usando o JTextArea para formatar
             JTextArea textArea = new JTextArea(mensagem.toString());
             textArea.setEditable(false);
             JScrollPane scrollPane = new JScrollPane(textArea);
