@@ -1,0 +1,41 @@
+CREATE TABLE Cliente (
+    idCliente   INT AUTO_INCREMENT,
+    nome        VARCHAR(100) NOT NULL,
+    telefone    VARCHAR(12) NOT NULL,
+    cpf         VARCHAR(12) NOT NULL UNIQUE,
+    PRIMARY KEY (idCliente)
+);
+
+CREATE TABLE Livro (
+    idLivro     INT AUTO_INCREMENT,
+    nome        VARCHAR(100) NOT NULL,
+    ano         INT,
+    autor       VARCHAR(100),
+    total       INT NOT NULL,
+    emprestados INT NOT NULL,
+    PRIMARY KEY (idLivro)
+);
+
+CREATE TABLE Funcionario (
+    idFuncionario INT AUTO_INCREMENT,
+    nome          VARCHAR(100) NOT NULL,
+    salario       DOUBLE NOT NULL,
+    PRIMARY KEY (idFuncionario)
+);
+
+CREATE TABLE Emprestimo (
+    idEmprestimo            INT AUTO_INCREMENT,
+    idCliente               INT NOT NULL,
+    idLivro                 INT NOT NULL,
+    idFuncionario           INT NOT NULL,
+    dataEmprestimo          DATE NOT NULL,
+    dataDevolucaoPrevista   DATE,
+    dataDevolucaoEfetiva    DATE,
+    devolvido               BOOLEAN,
+    renovacoes              INT,
+
+    PRIMARY KEY (idEmprestimo),
+    FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
+    FOREIGN KEY (idLivro) REFERENCES Livro(idLivro),
+    FOREIGN KEY (idFuncionario) REFERENCES Funcionario(idFuncionario)
+);

@@ -1,0 +1,11 @@
+
+CREATE TABLE livro_temp LIKE Livro;
+INSERT INTO livro_temp SELECT * FROM Livro;
+DROP TABLE Livro;
+RENAME TABLE livro_temp TO Livro;
+ALTER TABLE Livro AUTO_INCREMENT = 30 FORCE;
+
+CREATE TABLE emprestimo_temp LIKE Emprestimo;
+INSERT INTO emprestimo_temp SELECT * from Emprestimo;
+DROP TABLE Emprestimo;
+RENAME TABLE emprestimo_temp TO Emprestimo;
