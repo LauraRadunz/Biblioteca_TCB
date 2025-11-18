@@ -1,10 +1,10 @@
 CREATE TABLE Cliente (
     idCliente   INT AUTO_INCREMENT,
     nome        VARCHAR(100) NOT NULL,
-    telefone    VARCHAR(12) NOT NULL,
-    cpf         VARCHAR(12) NOT NULL UNIQUE,
+    telefone    VARCHAR(20) NOT NULL,
+    cpf         VARCHAR(20) NOT NULL UNIQUE,
     PRIMARY KEY (idCliente)
-);
+) AUTO_ID_CACHE=1;
 
 CREATE TABLE Livro (
     idLivro     INT AUTO_INCREMENT,
@@ -14,14 +14,14 @@ CREATE TABLE Livro (
     total       INT NOT NULL,
     emprestados INT NOT NULL,
     PRIMARY KEY (idLivro)
-);
+) AUTO_ID_CACHE=1;
 
 CREATE TABLE Funcionario (
     idFuncionario INT AUTO_INCREMENT,
     nome          VARCHAR(100) NOT NULL,
     salario       DOUBLE NOT NULL,
     PRIMARY KEY (idFuncionario)
-);
+) AUTO_ID_CACHE=1;
 
 CREATE TABLE Emprestimo (
     idEmprestimo            INT AUTO_INCREMENT,
@@ -38,4 +38,4 @@ CREATE TABLE Emprestimo (
     FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente),
     FOREIGN KEY (idLivro) REFERENCES Livro(idLivro),
     FOREIGN KEY (idFuncionario) REFERENCES Funcionario(idFuncionario)
-);
+) AUTO_ID_CACHE=1;
